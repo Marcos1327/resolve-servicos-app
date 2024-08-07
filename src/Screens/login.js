@@ -10,12 +10,12 @@ const Login = () => {
                     Resolve Serviços
                 </Text>
 
-                <TextInput placeholder='Email'
-                    keyboardType='email-address'
+                <TextInput placeholder='Usuário'
+                    keyboardType='Usuario'
                     style={styles.input}>
                 </TextInput>
 
-                <TextInput placeholder='Password'
+                <TextInput placeholder='Senha'
                     secureTextEntry
                     style={styles.input}>
                 </TextInput>
