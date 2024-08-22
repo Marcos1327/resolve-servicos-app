@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import * as Animatable from 'react-native-animatable'
 import { useNavigation } from '@react-navigation/native'
+import { Ionicons } from '@expo/vector-icons' 
 
 export default function SignIn() {
 
     const navigation = useNavigation();
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [password, setPassword] = useState('');
+
     return (
         <View style={styles.container}>
             <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
@@ -19,9 +23,30 @@ export default function SignIn() {
                 </TextInput>
 
                 <Text style={styles.title}>Senha</Text>
-                <TextInput placeholder='Sua senha' style={styles.input}>
+                <View style={{ position: 'relative' }}>
+                    <TextInput 
+                        placeholder='Sua senha' 
+                        style={styles.input}
+                        secureTextEntry={!passwordVisible}
+                        maxLength={32}
+                        value={password}
+                        onChangeText={(text) => setPassword(text)}
+                    />
+                    <TouchableOpacity  
+                        style={styles.icon}
+                        onPress={() => setPasswordVisible(!passwordVisible)}
+                    >
+                        <Ionicons 
+                            name={passwordVisible ? "eye-off" : "eye"} 
+                            color="#38a69d" 
+                            size={25}
+                        /> 
+                    </TouchableOpacity>
+                </View>
 
-                </TextInput>
+                {password.length >= 32 && (
+                    <Text style={styles.errorText}>O limite máximo de 32 caracteres foi atingido.</Text>
+                )}
 
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Acessar</Text>
@@ -75,6 +100,19 @@ const styles = StyleSheet.create({
         height: 40,
         marginBottom: 12,
         fontSize: 16
+    },
+
+    icon: {
+        position: 'absolute',
+        right: 10,
+        top: 10,
+    },
+
+    errorText: {
+        color: 'red',
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginTop: 5,
     },
 
     button: {
